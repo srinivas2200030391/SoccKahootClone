@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-
+const crypto = require("crypto");
 const GameSchema = new mongoose.Schema({
-    pin: {
-        type: String,
-        
-    },
+  pin: {
+    type: String,
+    default: () => crypto.randomBytes(6).toString("hex"),
+  },
   title: {
     type: String,
     required: true,
