@@ -16,6 +16,7 @@ mongoose
     console.log(err.message);
   });
 app.use("/admin", game);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Running on " + PORT);

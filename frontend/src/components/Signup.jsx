@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import "./Login.css";
+import "./Register.css";
 import { IoLogoGoogle } from "react-icons/io5";
 import axios from "axios";
 import config from "../config";
-const LoginPage = () => {
+
+const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [type, setType] = useState("password");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+
   const handleToggle = () => {
     if (type === "password") {
       setType("text");
@@ -14,25 +17,29 @@ const LoginPage = () => {
       setType("password");
     }
   };
-  const checkLogin = async () => {
+
+  const handleRegister = async () => {
     try {
-      const response = await axios.post(`${config.baseURL}/admin/login`, {
+      const response = await axios.post(`${config.baseURL}/admin/create`, {
+        username: username,
         email: email,
         password: password,
       });
       if (response) {
-        alert("Success");
+        alert("Registration successful");
         setEmail("");
         setPassword("");
+        setUsername("");
       }
     } catch (error) {
       console.log(error.message);
     }
   };
+
   return (
-    <div className="login-page">
-      <div className="login-container">
-        <h1 style={{ textAlign: "center", fontFamily: "cursive" }}>Log in</h1>
+    <div className="register-page">
+      <div className="register-container">
+        <h1 style={{ textAlign: "center", fontFamily: "cursive" }}>Register</h1>
         <div className="form-group">
           <p
             style={{
@@ -41,14 +48,29 @@ const LoginPage = () => {
               fontFamily: "cursive",
               opacity: "0.7",
             }}>
-            UserName or email
+            Username
           </p>
           <input
             type="text"
-            style={{
-              height: "20px",
-              marginTop: "-10px",
+            style={{ height: "20px", marginTop: "-10px" }}
+            onChange={(e) => {
+              setUsername(e.target.value);
             }}
+          />
+        </div>
+        <div className="form-group">
+          <p
+            style={{
+              fontWeight: "bold",
+              fontSize: "15px",
+              fontFamily: "cursive",
+              opacity: "0.7",
+            }}>
+            Email
+          </p>
+          <input
+            type="email"
+            style={{ height: "20px", marginTop: "-10px" }}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -79,67 +101,36 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
-            style={{
-              border: "none",
-              outline: "none",
-              height: "20px",
-            }}
+            style={{ border: "none", outline: "none", height: "20px" }}
           />
           <span
             className="show-password"
-            style={{
-              transform: "translateY(5px)",
-              marginRight: "10px",
-            }}
+            style={{ transform: "translateY(5px)", marginRight: "10px" }}
             onClick={handleToggle}>
             &#128065;
           </span>
         </div>
-        <div
-          className="form-group"
-          style={{
-            fontFamily: "cursive",
-          }}>
-          <span>Forgot password? </span>
-          <a
-            href="#"
-            style={{
-              color: "",
-              textDecoration: "none",
-            }}>
-            Reset your password
-          </a>
-        </div>
         <button
-          className="login-btn"
-          style={{
-            fontFamily: "cursive",
-          }}
-          onClick={checkLogin}>
-          Log in
+          className="register-btn"
+          style={{ fontFamily: "cursive" }}
+          onClick={handleRegister}>
+          Register
         </button>
         <div className="divider">or</div>
         <button
           className="provider-btn"
-          style={{
-            fontFamily: "cursive",
-            fontSize: "15px",
-          }}>
+          style={{ fontFamily: "cursive", fontSize: "15px" }}>
           <IoLogoGoogle
-            style={{
-              transform: "translateX(-20px)",
-              fontSize: "20px",
-            }}
+            style={{ transform: "translateX(-20px)", fontSize: "20px" }}
           />
           Continue with Google
         </button>
-
-        <div className="signup-link">
-          Don't have an account? <a href="signup">Sign up</a>
+        <div className="login-link">
+          Already have an account? <a href="login">Log in</a>
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
