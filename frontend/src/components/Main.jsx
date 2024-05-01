@@ -1,33 +1,34 @@
-import React, { Suspense, lazy, useEffect, useState } from "react";
-import axios from "axios";
-const Loading = lazy(() => import("./Loading"));
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
+import "../App.css";
 
-export default function Main() {
-  const [data, setData] = useState(null);
-  const fetchData = async () => {
-    try {
-      const data = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      setData(data.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+const Main = () => {
+  const [gid, setGid] = useState("");
+
   return (
-    <div>
-      {data ? (
-        <div>
-          {data.map((data, index) => (
-            <h3>{data.id}</h3>
-          ))}
+    <div className="container">
+      <Helmet>
+        <title>Enter Game PIN - SoccKahoot!</title>
+      </Helmet>
+      <h1 className="title">SoccKahoot</h1>
+      <div className="box">
+        <div className="input-container">
+          <input
+            type="text"
+            placeholder="Game PIN"
+            className="input"
+            value={gid}
+            onChange={(e) => {
+              setGid(e.target.value);
+            }}
+          />
         </div>
-      ) : (
-        <Suspense fallback={<div>Error Loading....</div>}></Suspense>
-      )}
+        <button className="button" onClick={() => console.log(gid)}>
+          Enter
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default Main;

@@ -1,15 +1,17 @@
 import React from "react";
+import "./LoadingPage.css";
 
-export default function Loading() {
+const LoadingPage = () => {
   return (
-    <div>
-      <h3
-        style={{
-          font: "bolder",
-          fontSize: "59pt",
-        }}>
-        Loading....
-      </h3>
+    <div className="loading-page">
+      <div className="loading-container">
+        <div className="loading-circle">
+          <div className="circle-progress"></div>
+        </div>
+        <h1 className="loading-text">Loading...</h1>
+      </div>
     </div>
   );
-}
+};
+
+export default LoadingPage;
