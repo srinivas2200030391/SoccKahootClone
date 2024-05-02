@@ -51,6 +51,12 @@ const GameSchema = new mongoose.Schema({
       },
     },
   ],
+  Users: [
+    {
+      type: String,
+      default: "",
+    },
+  ],
 });
 
 const GameModel = mongoose.model("Game", GameSchema);
